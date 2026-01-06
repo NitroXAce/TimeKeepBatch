@@ -2,11 +2,13 @@
 setlocal EnableDelayedExpansion
 cls
 
-echo ~~~~~~~~~~~~~~~~~~~~~~~~ >> ".txt"
-echo   Time Checker Software  >> ".txt"
-echo ~~~~~~~~~~~~~~~~~~~~~~~~ >> ".txt"
+set "file = %date%.txt"
+
+echo ~~~~~~~~~~~~~~~~~~~~~~~~ >> %file%
+echo   Time Checker Software  >> %file%
+echo ~~~~~~~~~~~~~~~~~~~~~~~~ >> %file%
 echo.
-echo By using this software, you agree that this is a time-checking utility. >> ".txt"
+echo By using this software, you agree that this is a time-checking utility. >> %file%
 echo.
 
 set /p choice="Do you agree? Enter 1 for yes, 2 for no: "
@@ -33,7 +35,7 @@ goto :EOF
 :StartTask
 call :GetTimeSeconds begin
 echo.
-echo Task started at %TIME% >> ".txt"
+echo Task started at %TIME% >> %file%
 
 call :timeGate "End your task?" TaskEnd StartTask
 exit /b
@@ -76,8 +78,8 @@ if %elapsed% lss 0 set /a elapsed+=86400
 set /a total+=elapsed
 
 echo.
-echo Task ended at %TIME% >> ".txt"
-echo Time spent on task: %elapsed% seconds >> ".txt"
+echo Task ended at %TIME% >> %file%
+echo Time spent on task: %elapsed% seconds >> %file%
 goto Reason
 
 :: --------------------------------------------------
@@ -92,7 +94,7 @@ if /i "%REASON%"=="EXIT" goto Summary
 call :GetTimeSeconds typing
 set /a typeTotal+=typing
 
-echo "Recorded at %TIME%: %REASON%" >> ".txt"
+echo "Recorded at %TIME%: %REASON%" >> %file%
 goto Reason
 
 :: --------------------------------------------------
@@ -100,10 +102,10 @@ goto Reason
 :: --------------------------------------------------
 :Summary
 echo.
-echo ======================== >> ".txt"
-echo Total task time   : %total% seconds >> ".txt"
-echo Time typing notes : %typeTotal% seconds >> ".txt"
-echo ======================== >> ".txt"
+echo ======================== >> %file%
+echo Total task time   : %total% seconds >> %file%
+echo Time typing notes : %typeTotal% seconds >> %file%
+echo ======================== >> %file%
 pause
 exit /b
 
